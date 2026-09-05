@@ -1,0 +1,145 @@
+---
+import { whatsappUrl } from "../../lib/constants";
+---
+
+<section
+  id="experience"
+  class="relative min-h-[85vh] flex items-center justify-center py-28 px-6 md:px-12 overflow-hidden bg-serene-navy"
+>
+  <!-- FOTO DE FONDO CON SOBREDIMENSIÓN PARA EVITAR BORDES Y PARALLAX PERFECTO -->
+  <div
+    class="absolute -top-[15%] left-0 w-full h-[130%] z-0 overflow-hidden pointer-events-none"
+  >
+    <img
+      id="experience-bg-img"
+      src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=2000&auto=format&fit=crop"
+      alt="Serene Method Sanctuary Experience"
+      class="w-full h-full object-cover object-center scale-110 opacity-35"
+    />
+    <!-- Overlay de Velo Azul Oscuro e Integración con los Bordes -->
+    <div class="absolute inset-0 bg-serene-navy/75"></div>
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-serene-navy via-transparent to-serene-navy opacity-90"
+    >
+    </div>
+  </div>
+
+  <!-- CONTENIDO CENTRAL DE FILOSOFÍA Y BIENESTAR -->
+  <div class="relative z-10 max-w-4xl mx-auto text-center space-y-8">
+    <!-- INSIGNIA EDITORIAL -->
+    <div
+      class="inline-flex items-center space-x-3 bg-serene-cream/10 backdrop-blur-md border border-serene-gold/30 px-5 py-2 rounded-full"
+    >
+      <span class="w-1.5 h-1.5 rounded-full bg-serene-gold animate-pulse"
+      ></span>
+      <span
+        class="text-[11px] uppercase tracking-[0.25em] text-serene-cream font-sans font-medium"
+      >
+        The Serene Sanctuary • Dubai
+      </span>
+    </div>
+
+    <!-- TÍTULO PRINCIPAL -->
+    <h2
+      class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif text-serene-cream leading-[1.15] tracking-tight"
+    >
+      A Sanctuary of Motion, <br />
+      <span class="italic font-light text-serene-gold">Balance & Quietude</span>
+    </h2>
+
+    <!-- TEXTO MANIFIESTO DE FILOSOFÍA -->
+    <p
+      class="text-serene-cream/80 text-base sm:text-lg md:text-xl font-sans font-light leading-relaxed max-w-2xl mx-auto"
+    >
+      True body sculpting begins with deep tranquility. We bring authentic
+      Colombian body contouring techniques and intentional manual care directly
+      into the comfort of your sanctuary, transforming your personal space into
+      a haven of rest and holistic renewal.
+    </p>
+
+    <!-- PILARES EN TRES PUNTOS -->
+    <div
+      class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 max-w-3xl mx-auto border-t border-serene-gold/20"
+    >
+      <div class="space-y-1">
+        <h3 class="text-serene-gold font-serif text-lg">Personalized Care</h3>
+        <p class="text-xs text-serene-cream/70 font-sans font-light">
+          Tailored techniques adapted to your body’s unique natural rhythm.
+        </p>
+      </div>
+      <div class="space-y-1">
+        <h3 class="text-serene-gold font-serif text-lg">Authentic Mastery</h3>
+        <p class="text-xs text-serene-cream/70 font-sans font-light">
+          Specialized Colombian Wood Therapy and fluid lymphatic drainage.
+        </p>
+      </div>
+      <div class="space-y-1">
+        <h3 class="text-serene-gold font-serif text-lg">Effortless Comfort</h3>
+        <p class="text-xs text-serene-cream/70 font-sans font-light">
+          Discreet, professional home wellness without leaving your residence.
+        </p>
+      </div>
+    </div>
+
+    <!-- BOTÓN DE ACCIÓN -->
+    <div class="pt-8">
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center space-x-3 bg-serene-gold hover:bg-serene-cream text-serene-navy font-sans text-xs uppercase tracking-[0.2em] font-semibold px-8 py-4 rounded-full transition-all duration-300 shadow-xl hover:shadow-serene-gold/20 hover:scale-105 cursor-pointer"
+      >
+        <span>Reserve Your Session</span>
+        <span class="text-base">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SCRIPT GSAP: PARALLAX CORREGIDO SIN ESPACIOS VACÍOS -->
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const experienceSection = document.getElementById("experience");
+    const bgImg = document.getElementById("experience-bg-img");
+
+    if (experienceSection && bgImg) {
+      // Parallax contenido dentro del área sobredimensionada (-15% a +130%)
+      gsap.to(bgImg, {
+        yPercent: 12,
+        ease: "none",
+        scrollTrigger: {
+          trigger: experienceSection,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+
+      // Revelado de textos al entrar
+      gsap.fromTo(
+        "#experience .max-w-4xl > *",
+        {
+          opacity: 0,
+          y: 25,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.12,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: experienceSection,
+            start: "top 75%",
+            toggleActions: "play none none reverse",
+          },
+        },
+      );
+    }
+  });
+</script>

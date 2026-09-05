@@ -1,0 +1,105 @@
+---
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  variant?: "full" | "complete" | "icon" | "text";
+  size?: "sm" | "md" | "lg" | "xl";
+  class?: string;
+  href?: string;
+}
+
+const {
+  variant = "full",
+  size = "md",
+  class: className = "",
+  href = "/",
+} = Astro.props;
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/brand/*.svg",
+  { eager: true },
+);
+
+const iconCream = images["/src/assets/brand/icon-Cream.svg"]?.default.src;
+const iconNavy = images["/src/assets/brand/icon-Navy.svg"]?.default.src;
+
+const textCream = images["/src/assets/brand/Serene-Cream.svg"]?.default.src;
+const textNavy = images["/src/assets/brand/Serene-Navy.svg"]?.default.src;
+
+const sizes = {
+  sm: { icon: "w-7 h-7", text: "h-4" },
+  md: { icon: "w-9 h-9 md:w-10 md:h-10", text: "h-5 md:h-6" },
+  lg: { icon: "w-12 h-12 md:w-14 md:h-14", text: "h-8 md:h-9" },
+  xl: { icon: "w-16 h-16 md:w-20 md:h-20", text: "h-10 md:h-12" },
+};
+---
+
+<a
+  href={href}
+  class={`logo-wrapper relative inline-flex items-center space-x-3 group cursor-pointer ${className}`}
+  aria-label="Serene Method Logo"
+>
+  <!-- ISOTIPO / ICONO (Grid layout para no perder dimensiones) -->
+  {
+    (variant === "full" || variant === "icon") && (
+      <div
+        class={`grid grid-cols-1 grid-rows-1 ${sizes[size].icon} items-center justify-center shrink-0`}
+      >
+        <img
+          src={iconCream}
+          alt="Serene Icon Light"
+          class="logo-img-cream col-start-1 row-start-1 w-full h-full object-contain"
+        />
+        <img
+          src={iconNavy}
+          alt="Serene Icon Dark"
+          class="logo-img-navy col-start-1 row-start-1 w-full h-full object-contain"
+        />
+      </div>
+    )
+  }
+
+  <!-- LOGOTIPO / TEXTO (Grid layout: fuerza a mantener el ancho del SVG) -->
+  {
+    (variant === "full" || variant === "text") && (
+      <div
+        class={`grid grid-cols-1 grid-rows-1 ${sizes[size].text} items-center shrink-0`}
+      >
+        <img
+          src={textCream}
+          alt="Serene Text Light"
+          class="logo-img-cream col-start-1 row-start-1 h-full w-auto object-contain"
+        />
+        <img
+          src={textNavy}
+          alt="Serene Text Dark"
+          class="logo-img-navy col-start-1 row-start-1 h-full w-auto object-contain"
+        />
+      </div>
+    )
+  }
+</a>
+
+<style>
+  /* Usamos Grid CSS para superponer sin que el div colapse su ancho a 0 */
+
+  /* MODO TRANSPARENTE: Muestra imágenes Crema y oculta Navy */
+  :global(.mode-transparent) .logo-img-cream {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  :global(.mode-transparent) .logo-img-navy {
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
+  /* MODO SCROLLED: Muestra imágenes Navy y oculta Crema */
+  :global(.mode-scrolled) .logo-img-cream {
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+  :global(.mode-scrolled) .logo-img-navy {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+</style>

@@ -1,0 +1,137 @@
+---
+// URL del mensaje de WhatsApp codificado con la oferta del 15% OFF
+const whatsappMessage = encodeURIComponent(
+  "Hello! I would like to claim the 15% Summer Discount on your home wellness services.",
+);
+const whatsappUrl = `https://wa.me/971547779788?text=${whatsappMessage}`;
+---
+
+<section
+  id="hero-section"
+  class="relative h-screen w-full flex items-center justify-center overflow-hidden bg-serene-navy"
+>
+  <!-- 1. FOTO DE FONDO CON OVERLAY PREMIUM -->
+  <div class="absolute inset-0 z-0">
+    <!-- Overlay gradiente para legibilidad perfecta de los textos -->
+    <div
+      class="absolute inset-0 bg-linear-to-b from-serene-navy/70 via-serene-navy/60 to-serene-navy/90 z-10"
+    >
+    </div>
+
+    <img
+      src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=1920&auto=format&fit=crop"
+      alt="Serene Method Dubai Home Wellness Experience"
+      class="hero-bg-img w-full h-full object-cover object-center scale-110"
+    />
+  </div>
+
+  <!-- 2. CONTENIDO CENTRADO EN PANTALLA -->
+  <div
+    class="relative z-20 max-w-4xl mx-auto px-6 text-center flex flex-col items-center justify-center space-y-6 pt-16"
+  >
+    <!-- Tag de Oferta de Verano -->
+    <div
+      class="hero-item inline-flex items-center space-x-2.5 bg-serene-cream/10 backdrop-blur-md border border-serene-gold/40 px-5 py-2 rounded-full"
+    >
+      <span class="w-2 h-2 rounded-full bg-serene-gold animate-pulse"></span>
+      <span
+        class="text-xs uppercase tracking-[0.2em] font-sans font-semibold text-serene-gold"
+      >
+        Summer Special • 15% OFF
+      </span>
+    </div>
+
+    <!-- Título Principal Centrado (EB Garamond) -->
+    <h1
+      class="hero-item text-4xl sm:text-6xl md:text-7xl font-serif text-serene-white leading-[1.15] tracking-tight"
+    >
+      High-End Wellness & <br class="hidden sm:block" />
+      <span class="italic text-serene-gold font-normal">Body Sculpting</span> at Home
+    </h1>
+
+    <!-- Subtítulo / Descripción Sencilla (Montserrat) -->
+    <p
+      class="hero-item text-base sm:text-lg md:text-xl font-sans text-serene-cream/90 max-w-2xl font-light leading-relaxed"
+    >
+      Authentic Colombian Wood Therapy, Lymphatic Drainage, and bespoke body
+      sculpting delivered directly to your residence in Dubai. Available for men
+      and women.
+    </p>
+
+    <!-- Botón de Acción Principal (CTA WhatsApp) -->
+    <div
+      class="hero-item pt-4 flex flex-col items-center space-y-3 w-full sm:w-auto"
+    >
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="w-full sm:w-auto inline-flex items-center justify-center bg-serene-gold text-serene-navy hover:bg-serene-cream font-sans text-sm tracking-wider uppercase font-semibold px-9 py-4 rounded-full transition-all duration-500 shadow-2xl hover:scale-105 group"
+      >
+        <span>Claim 15% Discount</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4 ml-3 group-hover:translate-x-1 transition-transform duration-300"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+        </svg>
+      </a>
+
+      <span
+        class="text-xs font-sans text-serene-tan/80 tracking-widest uppercase pt-1"
+      >
+        *Available across all Dubai locations
+      </span>
+    </div>
+  </div>
+
+  <!-- Indicador de Scroll Suave al Pie -->
+  <div
+    class="hero-item absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center space-y-2 opacity-70"
+  >
+    <span
+      class="text-[10px] uppercase tracking-[0.3em] text-serene-cream font-sans font-light"
+      >Explore</span
+    >
+    <div
+      class="w-5 h-8 border border-serene-cream/40 rounded-full flex justify-center pt-1.5"
+    >
+      <div class="w-1 h-2 bg-serene-gold rounded-full animate-bounce"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ANIMACIONES GSAP (Awwwards Style) -->
+<script>
+  import { gsap } from "gsap";
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+    // 1. Zoom Out suave de la imagen de fondo de escala 1.25 a 1.05
+    tl.fromTo(
+      ".hero-bg-img",
+      { scale: 1.25, opacity: 0.5 },
+      { scale: 1.05, opacity: 1, duration: 2.0 },
+    )
+
+      // 2. Revelado vertical escalonado de los textos desde el centro
+      .from(
+        ".hero-item",
+        {
+          y: 35,
+          opacity: 0,
+          duration: 1.1,
+          stagger: 0.18,
+        },
+        "-=1.6",
+      );
+  });
+</script>

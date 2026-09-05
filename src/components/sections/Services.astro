@@ -1,0 +1,373 @@
+---
+import { Image } from 'astro:assets';
+import DirhamSymbol from '../../assets/brand/Dirham_Symbol.svg';
+import { SERVICES, CATEGORIES } from '../../data/services';
+import { getWhatsAppUrl } from '../../lib/constants';
+
+const counts: Record<string, number> = {
+  all: SERVICES.length,
+  body: SERVICES.filter(s => s.category === 'body').length,
+  drainage: SERVICES.filter(s => s.category === 'drainage').length,
+  facial: SERVICES.filter(s => s.category === 'facial').length,
+  specialized: SERVICES.filter(s => s.category === 'specialized').length,
+};
+---
+
+<section id="services" class="py-24 px-4 sm:px-6 lg:px-8 bg-serene-cream relative overflow-hidden">
+  
+  <!-- ENCABEZADO EDITORIAL -->
+  <div class="max-w-3xl mx-auto text-center mb-10 space-y-3">
+    <span class="text-[10px] uppercase tracking-[0.3em] text-serene-tan font-sans font-bold bg-white/80 border border-serene-gold/30 px-4 py-1.5 rounded-full inline-block">
+      Bespoke Menu • Dubai
+    </span>
+    <h2 class="text-3xl sm:text-5xl md:text-6xl font-serif text-serene-navy">
+      Treatments & Rituals
+    </h2>
+    <p class="text-serene-navy/70 text-xs sm:text-sm font-sans font-light max-w-md mx-auto leading-relaxed">
+      Authentic Colombian contouring and lymphatic therapies delivered to your home.
+    </p>
+  </div>
+
+  <!-- NAVEGADOR DE CATEGORÍAS REDISEÑADO (SIN CORTES Y CLARO EN MÓVIL) -->
+  <div class="max-w-6xl mx-auto mb-14">
+    
+    <!-- Pista táctil visible solo en móvil -->
+    <div class="flex md:hidden items-center justify-between px-2 mb-2 text-serene-navy/60 text-[10px] font-sans uppercase tracking-widest">
+      <span>Filter Treatments</span>
+      <span class="flex items-center gap-1 text-serene-tan font-semibold">
+        Swipe <span class="text-xs">→</span>
+      </span>
+    </div>
+
+    <!-- Contenedor con gradientes de fade en los bordes en móvil -->
+    <div class="relative group">
+      
+      <!-- Fade Mask Izquierdo (Móvil) -->
+      <div class="pointer-events-none absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-serene-cream to-transparent z-10 md:hidden"></div>
+
+      <!-- Fila de Filtros: Scroll táctil en móvil + Wrap ordenado en desktop -->
+      <div 
+        id="category-bar" 
+        class="w-full flex items-center justify-start md:justify-center md:flex-wrap gap-2.5 overflow-x-auto md:overflow-x-visible py-2 px-3 no-scrollbar scroll-smooth"
+      >
+        {CATEGORIES.map((cat, index) => {
+          const count = counts[cat.id] || 0;
+          return (
+            <button
+              data-category={cat.id}
+              class={`tab-btn shrink-0 flex items-center space-x-2.5 px-5 py-2.5 rounded-full text-xs uppercase tracking-[0.15em] font-sans font-semibold border transition-all duration-300 cursor-pointer select-none whitespace-nowrap shadow-xs ${
+                index === 0 
+                  ? 'active-tab bg-serene-navy text-serene-cream border-serene-navy shadow-md scale-[1.02]' 
+                  : 'bg-white text-serene-navy/80 border-serene-gold/35 hover:border-serene-navy hover:text-serene-navy'
+              }`}
+            >
+              <span>{cat.label}</span>
+              <span class={`tab-count text-[11px] px-2 py-0.5 rounded-full font-bold transition-colors ${
+                index === 0 ? 'bg-serene-gold text-serene-navy' : 'bg-serene-cream text-serene-navy/70'
+              }`}>
+                {count}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      <!-- Fade Mask Derecho (Móvil) -->
+      <div class="pointer-events-none absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-serene-cream to-transparent z-10 md:hidden"></div>
+
+    </div>
+  </div>
+
+  <!-- GRID DE CARDS -->
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 sm:gap-8" id="services-grid">
+    {SERVICES.map((service) => {
+      const hasPromo = service.promotion?.active;
+      const discount = service.promotion?.discountPercentage || 0;
+      const firstOpt = service.options[0];
+      const initialPrice = hasPromo ? Math.round(firstOpt.price * (1 - discount / 100)) : firstOpt.price;
+      const defaultBookingUrl = getWhatsAppUrl(`Hello! I would like to book the ${service.title}${hasPromo ? ` (${service.promotion?.label})` : ''} (${firstOpt.duration} - AED ${initialPrice}).`);
+
+      return (
+        <article 
+          class={`service-card group relative bg-white rounded-3xl p-5 sm:p-6 border shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden ${
+            hasPromo ? 'border-serene-gold/80 promo-active-card' : 'border-serene-gold/30'
+          }`}
+          data-category={service.category}
+          data-service-title={service.title}
+          data-promo-label={hasPromo ? service.promotion?.label : ''}
+          data-discount={discount}
+        >
+          <!-- BARRIDO DE LUZ (SWEEP LIGHT) CONTINUO -->
+          {hasPromo && <div class="card-sweep-light"></div>}
+
+          <div>
+            <!-- FOTO CON BADGE PROMO ELEGANTE -->
+            <div class="relative w-full aspect-[4/5] rounded-2xl overflow-hidden bg-serene-navy/5 mb-5 shadow-inner">
+              <Image 
+                src={service.image} 
+                alt={service.title} 
+                width={550}
+                height={680}
+                format="webp"
+                quality={85}
+                loading="lazy"
+                decoding="async"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
+              
+              <!-- Tag Categoría -->
+              <span class="absolute top-3.5 left-3.5 bg-serene-navy/90 backdrop-blur-md text-serene-cream text-[9px] uppercase tracking-widest font-sans font-bold px-3 py-1 rounded-full shadow-sm z-10">
+                {service.category}
+              </span>
+
+              <!-- SELLO CIRCULAR PROMO -->
+              {hasPromo && (
+                <div class="absolute top-3.5 right-3.5 z-10">
+                  <div class="relative w-[95px] sm:w-[105px] aspect-square rounded-full flex flex-col items-center justify-center p-2 text-center border border-serene-gold/60 bg-gradient-to-br from-serene-navy/92 via-serene-navy/85 to-serene-navy/95 backdrop-blur-md shadow-2xl">
+                    
+                    <div class="absolute inset-1 rounded-full border border-serene-gold/25 pointer-events-none"></div>
+
+                    <span class="font-serif font-black text-serene-cream text-2xl sm:text-3xl tracking-tight leading-none drop-shadow-md">
+                      -{discount}%
+                    </span>
+
+                    <span class="text-[7.5px] uppercase tracking-[0.15em] font-sans font-bold text-serene-tan/90 border-t border-serene-gold/30 pt-1 mt-0.5 line-clamp-1">
+                      {service.promotion?.label}
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <!-- TÍTULO Y DESCRIPCIÓN -->
+            <div class="space-y-2 mb-5">
+              <h3 class="text-2xl font-serif text-serene-navy group-hover:text-serene-tan transition-colors duration-200 leading-snug">
+                {service.title}
+              </h3>
+              <p class="text-xs sm:text-sm font-sans text-serene-navy/70 font-light leading-relaxed line-clamp-2 min-h-[2.5rem]">
+                {service.description}
+              </p>
+            </div>
+          </div>
+
+          <!-- BLOQUE DE PRECIOS CON DURACIÓN MÁS GRANDE Y PROMINENTE -->
+          <div class="pt-4 border-t border-serene-gold/20 space-y-3.5 mt-auto">
+            
+            <div class="flex gap-2.5">
+              {service.options.map((opt, i) => {
+                const optFinalPrice = hasPromo ? Math.round(opt.price * (1 - discount / 100)) : opt.price;
+                return (
+                  <div class="flex-1 flex flex-col items-center">
+                    
+                    <!-- DURACIÓN MÁS GRANDE Y LEGIBLE -->
+                    <span class="block text-xs sm:text-sm uppercase tracking-[0.15em] font-sans font-extrabold text-serene-navy/80 mb-1.5">
+                      {opt.duration}
+                    </span>
+
+                    <!-- CUADRO INTERACTIVO DE PRECIO -->
+                    <button
+                      type="button"
+                      data-duration={opt.duration}
+                      data-price={optFinalPrice}
+                      class={`opt-btn w-full min-h-[76px] flex flex-col justify-center items-center py-3 px-2 rounded-2xl border text-center transition-all duration-200 cursor-pointer select-none ${
+                        i === 0
+                          ? 'border-serene-navy bg-serene-cream/70 shadow-sm ring-1 ring-serene-navy/30'
+                          : 'border-serene-navy/20 bg-white hover:border-serene-navy/40'
+                      }`}
+                    >
+                      <!-- Precio Anterior Tachado (o placeholder invisible para alinear alturas) -->
+                      {hasPromo ? (
+                        <div class="flex items-center justify-center gap-1 leading-none mb-1 opacity-45">
+                          <Image 
+                            src={DirhamSymbol} 
+                            alt="AED" 
+                            class="w-3 h-3 inline-block object-contain" 
+                          />
+                          <span class="text-xs font-serif font-semibold text-serene-navy line-through">
+                            {opt.price}
+                          </span>
+                        </div>
+                      ) : (
+                        <div class="h-3.5 mb-1 invisible">
+                          <span class="text-xs">placeholder</span>
+                        </div>
+                      )}
+
+                      <!-- Precio Final Protagonista -->
+                      <div class="flex items-center justify-center gap-1.5 leading-none">
+                        <Image 
+                          src={DirhamSymbol} 
+                          alt="AED" 
+                          class="w-4 h-4 sm:w-5 sm:h-5 inline-block object-contain" 
+                        />
+                        <span class="text-2xl sm:text-3xl font-serif font-black text-serene-navy tracking-tight">
+                          {optFinalPrice}
+                        </span>
+                      </div>
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+
+            <!-- BOTÓN BOOK FULL WIDTH -->
+            <a 
+              href={defaultBookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="service-book-btn w-full flex items-center justify-center space-x-2 bg-serene-navy hover:bg-serene-gold text-serene-cream hover:text-serene-navy font-sans text-xs uppercase tracking-[0.2em] font-semibold py-4 rounded-xl transition-all duration-300 shadow-md cursor-pointer"
+            >
+              <span>Book Ritual</span>
+              <span class="text-sm">→</span>
+            </a>
+
+          </div>
+
+        </article>
+      );
+    })}
+  </div>
+
+</section>
+
+<style>
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .active-tab {
+    background-color: #090D3D !important;
+    color: #FDFCF9 !important;
+    border-color: #090D3D !important;
+  }
+
+  .service-card {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    will-change: opacity, transform;
+  }
+
+  .service-card.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .card-sweep-light {
+    position: absolute;
+    top: -50%;
+    left: -150%;
+    width: 60%;
+    height: 200%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(223, 206, 146, 0.28) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(25deg) translateZ(0);
+    pointer-events: none;
+    z-index: 20;
+    animation: fullCardSweep 4.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes fullCardSweep {
+    0% { left: -150%; }
+    30%, 100% { left: 200%; }
+  }
+</style>
+
+<script>
+  import { getWhatsAppUrl } from '../../lib/constants';
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.tab-btn');
+    const cards = document.querySelectorAll('.service-card');
+
+    // 1. Reveal fluido
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        rootMargin: '0px 0px -40px 0px',
+        threshold: 0.08,
+      }
+    );
+
+    cards.forEach((card) => observer.observe(card));
+
+    // 2. Intercambio de Duración y Precio
+    cards.forEach((card) => {
+      const optButtons = card.querySelectorAll<HTMLButtonElement>('.opt-btn');
+      const bookBtn = card.querySelector<HTMLAnchorElement>('.service-book-btn');
+      const title = card.getAttribute('data-service-title') || '';
+      const promoLabel = card.getAttribute('data-promo-label') || '';
+
+      optButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          optButtons.forEach((b) => {
+            b.classList.remove('border-serene-navy', 'bg-serene-cream/70', 'shadow-sm', 'ring-1', 'ring-serene-navy/30');
+            b.classList.add('border-serene-navy/20', 'bg-white');
+          });
+
+          btn.classList.add('border-serene-navy', 'bg-serene-cream/70', 'shadow-sm', 'ring-1', 'ring-serene-navy/30');
+          btn.classList.remove('border-serene-navy/20', 'bg-white');
+
+          const duration = btn.getAttribute('data-duration');
+          const price = btn.getAttribute('data-price');
+          const promoText = promoLabel ? ` (${promoLabel})` : '';
+
+          if (bookBtn) {
+            bookBtn.href = getWhatsAppUrl(`Hello! I would like to book the ${title}${promoText} (${duration} - AED ${price}).`);
+          }
+        });
+      });
+    });
+
+    // 3. Filtrado por Tabs con actualización de contadores
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const selectedCat = tab.getAttribute('data-category');
+
+        tabs.forEach((t) => {
+          t.classList.remove('active-tab', 'bg-serene-navy', 'text-serene-cream', 'border-serene-navy', 'shadow-md', 'scale-[1.02]');
+          t.classList.add('bg-white', 'text-serene-navy/80', 'border-serene-gold/35');
+          const badge = t.querySelector('.tab-count');
+          if (badge) {
+            badge.className = 'tab-count text-[11px] px-2 py-0.5 rounded-full font-bold bg-serene-cream text-serene-navy/70';
+          }
+        });
+
+        tab.classList.add('active-tab', 'bg-serene-navy', 'text-serene-cream', 'border-serene-navy', 'shadow-md', 'scale-[1.02]');
+        tab.classList.remove('bg-white', 'text-serene-navy/80', 'border-serene-gold/35');
+        const activeBadge = tab.querySelector('.tab-count');
+        if (activeBadge) {
+          activeBadge.className = 'tab-count text-[11px] px-2 py-0.5 rounded-full font-bold bg-serene-gold text-serene-navy';
+        }
+
+        cards.forEach((card) => {
+          const cardCat = card.getAttribute('data-category');
+          const isMatch = selectedCat === 'all' || cardCat === selectedCat;
+
+          if (isMatch) {
+            (card as HTMLElement).style.display = 'flex';
+            requestAnimationFrame(() => card.classList.add('is-visible'));
+          } else {
+            (card as HTMLElement).style.display = 'none';
+            card.classList.remove('is-visible');
+          }
+        });
+      });
+    });
+  });
+</script>

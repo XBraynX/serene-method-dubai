@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+/* Definición del tema y variables de color */
+@theme {
+  /* Paleta de Colores de Serene Method */
+  --color-serene-navy: #090D3D;
+  --color-serene-gold: #DFC49A;
+  --color-serene-tan: #BEAA8E;
+  --color-serene-white: #FDFCF9;
+  --color-serene-cream: #F5F0E8;
+
+  /* Fuentes del Proyecto */
+  --font-serif: 'EB Garamond', serif;
+  --font-sans: 'Montserrat', sans-serif;
+}
+
+/* Reglas globales de base */
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-serene-white);
+  color: var(--color-serene-navy);
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+}

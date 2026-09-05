@@ -1,0 +1,141 @@
+---
+import type { ImageMetadata } from "astro";
+import { whatsappUrl } from "../../lib/constants";
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/brand/*.svg",
+  { eager: true },
+);
+const sereneLogoSvg = images["/src/assets/brand/Serene-Cream.svg"]?.default.src;
+---
+
+<footer
+  id="reveal-footer"
+  class="sticky bottom-0 left-0 w-full h-[85vh] sm:h-[90vh] bg-serene-navy text-serene-cream flex flex-col justify-between p-8 sm:p-12 md:p-16 z-0 overflow-hidden"
+>
+  <!-- DETALLE SUPERIOR SUTIL -->
+  <div
+    class="w-full flex items-center justify-between border-b border-serene-gold/15 pb-6"
+  >
+    <span
+      class="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-serene-gold font-sans font-semibold"
+    >
+      Home Sanctuary Experience
+    </span>
+    <span
+      class="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-serene-cream/60 font-sans"
+    >
+      Dubai, UAE
+    </span>
+  </div>
+
+  <!-- CONTENEDOR DEL LOGO VECTORIAL SVG -->
+  <div class="w-full flex items-center justify-center my-auto py-6 px-4">
+    <div
+      id="footer-logo-wrapper"
+      class="w-full max-w-5xl flex justify-center items-center select-none"
+    >
+      <img
+        id="footer-logo-svg"
+        src={sereneLogoSvg}
+        alt="Serene Method Logo"
+        class="w-full max-h-[28vh] md:max-h-[35vh] object-contain cursor-default drop-shadow-2xl"
+      />
+    </div>
+  </div>
+
+  <!-- BARRA INFERIOR CON CÁPSULAS Y CRÉDITOS -->
+  <div
+    class="w-full grid grid-cols-1 md:grid-cols-3 items-center gap-6 pt-6 border-t border-serene-gold/15"
+  >
+    <!-- UBICACIÓN / HQ -->
+    <div class="text-left space-y-0.5 order-2 md:order-1">
+      <p
+        class="text-[9px] uppercase tracking-widest text-serene-gold font-sans font-bold"
+      >
+        Headquarters
+      </p>
+      <p class="text-xs text-serene-cream/70 font-sans font-light">
+        Dubai, United Arab Emirates
+      </p>
+    </div>
+
+    <!-- CÁPSULAS DE CONTACTO (CENTRO) -->
+    <div
+      class="flex flex-wrap items-center justify-center gap-3 order-1 md:order-2"
+    >
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center space-x-2 bg-serene-cream/10 hover:bg-serene-gold hover:text-serene-navy border border-serene-gold/30 px-5 py-2.5 rounded-full text-[11px] uppercase tracking-widest font-sans font-semibold transition-all duration-300 cursor-pointer"
+      >
+        <span>WhatsApp</span>
+      </a>
+      <a
+        href="mailto:contact@serenemethod.com"
+        class="inline-flex items-center space-x-2 bg-serene-cream/10 hover:bg-serene-gold hover:text-serene-navy border border-serene-gold/30 px-5 py-2.5 rounded-full text-[11px] uppercase tracking-widest font-sans font-semibold transition-all duration-300 cursor-pointer"
+      >
+        <span>Email</span>
+      </a>
+      <a
+        href="https://www.instagram.com/methodserene/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center space-x-2 bg-serene-cream/10 hover:bg-serene-gold hover:text-serene-navy border border-serene-gold/30 px-5 py-2.5 rounded-full text-[11px] uppercase tracking-widest font-sans font-semibold transition-all duration-300 cursor-pointer"
+      >
+        <span>Instagram</span>
+      </a>
+    </div>
+
+    <!-- COPYRIGHT & CRÉDITOS -->
+    <div class="text-left md:text-right space-y-0.5 order-3">
+      <p
+        class="text-[10px] uppercase tracking-widest text-serene-cream/60 font-sans"
+      >
+        © {new Date().getFullYear()} Serene Method.
+      </p>
+      <p
+        class="text-[9px] uppercase tracking-widest text-serene-gold/80 font-sans font-medium"
+      >
+        Engineered by Code Orbit
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- SCRIPT GSAP: SINCRONIZACIÓN SUAVE CON SCRUB -->
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const contactSection = document.getElementById("contact");
+    const footerLogo = document.getElementById("footer-logo-svg");
+
+    if (contactSection && footerLogo) {
+      gsap.fromTo(
+        footerLogo,
+        {
+          opacity: 0,
+          y: 40,
+          scale: 0.94,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: contactSection,
+            start: "bottom 90%", // Empieza a revelarse conforme contact sale de pantalla
+            end: "bottom top", // Termina la animación al quedar el footer 100% visible
+            scrub: 0.5, // Sincronización continua y fluida con la rueda del ratón
+          },
+        },
+      );
+    }
+  });
+</script>

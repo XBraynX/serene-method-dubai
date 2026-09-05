@@ -1,0 +1,237 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { whatsappUrl } from "../lib/constants";
+
+const PILLARS = [
+  {
+    number: "01",
+    title: "Intentional Touch",
+    description:
+      "Every contouring stroke and manual movement respects your body’s natural biological rhythm without aggressive or invasive measures.",
+  },
+  {
+    number: "02",
+    title: "Authentic Heritage",
+    description:
+      "Centuries-refined Colombian wood sculpting and lymphatic techniques delivered by specialized practitioners with anatomical precision.",
+  },
+  {
+    number: "03",
+    title: "Uncompromised Quietude",
+    description:
+      "Complete discretion and tranquility. We transform your personal residence into a private haven of restoration.",
+  },
+];
+
+const RITUAL_DETAILS = [
+  {
+    title: "Therapeutic Wood Craft",
+    description:
+      "Handcrafted anatomical tools shaped to stimulate blood flow, sculpt tissue contours, and activate deep lymphatic circulation.",
+  },
+  {
+    title: "Pure Botanical Oils",
+    description:
+      "Cold-pressed, organic plant extracts selected for cellular hydration, skin elasticity, and calming sensory aroma.",
+  },
+  {
+    title: "Sanctuary Essentials",
+    description:
+      "We supply everything from natural linens to ambient elements, requiring zero preparation on your end.",
+  },
+];
+---
+
+<Layout title="About Us | Serene Method Dubai" navTheme="dark">
+  <!-- 1. HERO SECTION EDITORIAL -->
+  <section
+    id="about-hero"
+    class="relative pt-36 pb-20 md:pt-44 md:pb-28 px-6 md:px-12 border-b border-serene-gold/20 overflow-hidden"
+  >
+    <div class="max-w-5xl mx-auto text-center space-y-6">
+      <span
+        class="inline-block text-[11px] uppercase tracking-[0.3em] text-serene- font-sans font-bold bg-white/80 border border-serene-gold/30 px-4 py-1.5 rounded-full"
+      >
+        The Philosophy & Craft
+      </span>
+      <h1
+        class="text-4xl sm:text-6xl md:text-7xl font-serif text-serene-navy leading-[1.1] tracking-tight"
+      >
+        Where Colombian Mastery Meets <br />
+        <span class="italic font-light text-serene-gold">Unspoken Serenity</span
+        >
+      </h1>
+      <p
+        class="text-serene-navy/75 text-base sm:text-lg md:text-xl font-sans font-light max-w-2xl mx-auto leading-relaxed"
+      >
+        Born from a deep respect for natural bodily harmony, Serene Method
+        brings specialized manual body contouring and restorative lymphatic
+        rituals directly to private residences in Dubai.
+      </p>
+    </div>
+  </section>
+
+  <!-- 2. ORIGIN & STORY (TWO-COLUMN EDITORIAL) -->
+  <section class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      <!-- FOTOGRAFÍA RETRATO CON MARCO REFINADO -->
+      <div class="lg:col-span-5 relative">
+        <div
+          class="relative h-[480px] sm:h-[560px] rounded-3xl overflow-hidden shadow-2xl border border-serene-gold/30"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1200&auto=format&fit=crop"
+            alt="Serene Method Practitioner"
+            class="w-full h-full object-cover"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-serene-navy/50 via-transparent to-transparent"
+          >
+          </div>
+        </div>
+        <!-- Badge Flotante -->
+        <div
+          class="absolute -bottom-6 -right-4 sm:right-6 bg-white/95 backdrop-blur-md border border-serene-gold/40 p-5 rounded-2xl shadow-xl max-w-xs"
+        >
+          <p class="text-xs font-serif italic text-serene-navy">
+            "True body definition is not forced; it is sculpted with intentional
+            touch and patience."
+          </p>
+        </div>
+      </div>
+
+      <!-- TEXTO DE LA HISTORIA -->
+      <div class="lg:col-span-7 space-y-6 pt-4 lg:pt-0">
+        <span
+          class="text-[10px] uppercase tracking-[0.25em] text-serene-tan font-sans font-bold"
+        >
+          Our Origin
+        </span>
+        <h2
+          class="text-3xl sm:text-4xl md:text-5xl font-serif text-serene-navy leading-tight"
+        >
+          Honoring the Heritage of Manual Body Sculpting
+        </h2>
+        <div
+          class="space-y-4 text-xs sm:text-sm md:text-base font-sans font-light text-serene-navy/80 leading-relaxed"
+        >
+          <p>
+            In Colombia, body contouring and lymphatic drainage are revered not
+            merely as aesthetic treatments, but as cultural rituals passed down
+            and refined through generations of specialized manual therapists.
+          </p>
+          <p>
+            Serene Method was founded to bring this authentic discipline to
+            Dubai's most discerning individuals. By bypassing machine-dependent
+            alternatives, our focus remains on precision wood therapy
+            (Maderoterapia) and fluid manual drainage that stimulate lymphatic
+            flow, relieve water retention, and redefine natural contours.
+          </p>
+          <p>
+            We believe wellness should exist without friction. By traveling
+            directly to your residence, we eliminate the stress of transit,
+            allowing the restorative benefits of your session to settle
+            seamlessly into your day.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. OUR CORE PILLARS -->
+  <section
+    class="py-24 px-6 md:px-12 bg-white/70 border-y border-serene-gold/20"
+  >
+    <div class="max-w-7xl mx-auto">
+      <div class="max-w-3xl mb-16 space-y-3">
+        <span
+          class="text-[10px] uppercase tracking-[0.25em] text-serene-tan font-sans font-bold"
+        >
+          The Foundation
+        </span>
+        <h2
+          class="text-3xl sm:text-4xl md:text-5xl font-serif text-serene-navy"
+        >
+          Our Guiding Principles
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {
+          PILLARS.map((pillar) => (
+            <div class="p-8 rounded-3xl bg-serene-cream/40 border border-serene-gold/20 hover:border-serene-gold/60 transition-all duration-300 space-y-4">
+              <span class="font-serif text-4xl text-serene-gold font-light">
+                {pillar.number}
+              </span>
+              <h3 class="text-xl font-serif text-serene-navy">
+                {pillar.title}
+              </h3>
+              <p class="text-xs sm:text-sm font-sans font-light text-serene-navy/70 leading-relaxed">
+                {pillar.description}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. WHAT WE BRING (RITUAL ELEMENTS) -->
+  <section class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+    <div class="max-w-3xl mx-auto text-center mb-16 space-y-3">
+      <span
+        class="text-[10px] uppercase tracking-[0.25em] text-serene-tan font-sans font-bold"
+      >
+        The Craft
+      </span>
+      <h2 class="text-3xl sm:text-5xl font-serif text-serene-navy">
+        What Accompanies Every Ritual
+      </h2>
+      <p class="text-serene-navy/70 text-xs sm:text-sm font-sans font-light">
+        We bring complete professional equipment to craft a dedicated wellness
+        sanctuary in your home.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {
+        RITUAL_DETAILS.map((item) => (
+          <div class="bg-white rounded-2xl p-7 border border-serene-gold/25 shadow-sm space-y-3">
+            <h3 class="text-lg font-serif text-serene-navy">{item.title}</h3>
+            <p class="text-xs font-sans font-light text-serene-navy/70 leading-relaxed">
+              {item.description}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- 5. FINAL INVITATION / BANNER -->
+  <section
+    class="py-20 px-6 md:px-12 bg-serene-navy text-serene-cream text-center"
+  >
+    <div class="max-w-3xl mx-auto space-y-6">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif">
+        Experience Authentic Restoration at Home
+      </h2>
+      <p
+        class="text-serene-cream/70 text-xs sm:text-sm font-sans font-light max-w-lg mx-auto"
+      >
+        Contact our team directly to discuss your body goals and schedule your
+        private in-residence session across Dubai.
+      </p>
+      <div class="pt-2">
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center space-x-3 bg-serene-gold hover:bg-serene-cream text-serene-navy font-sans text-xs uppercase tracking-[0.2em] font-semibold px-8 py-4 rounded-full transition-all duration-300 shadow-xl cursor-pointer"
+        >
+          <span>Book via WhatsApp</span>
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

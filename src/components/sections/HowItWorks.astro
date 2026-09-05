@@ -1,0 +1,129 @@
+---
+import { whatsappUrl } from '../../lib/constants';
+
+const STEPS = [
+  {
+    number: '01',
+    title: 'Select Your Treatment',
+    description: 'Explore our bespoke menu of Colombian body contouring, lymphatic drainage, or facial therapy and pick the ideal session for your body.',
+    detail: 'Personalized Consultation'
+  },
+  {
+    number: '02',
+    title: 'Sanctuary Setup at Home',
+    description: 'Our therapist arrives directly at your residence in Dubai with all specialized equipment, organic oils, and authentic wood therapy elements.',
+    detail: 'Effortless & Discreet'
+  },
+  {
+    number: '03',
+    title: 'Holistic Renewal',
+    description: 'Relax in total quietude as we deliver professional sculpting and drainage techniques designed to restore balance, contour, and lightness.',
+    detail: 'Pure Balance'
+  }
+];
+---
+
+<section id="how-it-works" class="py-24 px-6 md:px-12 bg-serene-cream relative overflow-hidden">
+  
+  <!-- ENCABEZADO EDITORIAL -->
+  <div class="max-w-4xl mx-auto text-center mb-16 space-y-3">
+    <span class="text-[11px] uppercase tracking-[0.3em] text-serene-tan font-sans font-bold">
+      Seamless Experience • Dubai
+    </span>
+    <h2 class="text-4xl md:text-6xl font-serif text-serene-navy">
+      How It Works
+    </h2>
+    <p class="text-serene-navy/70 text-sm md:text-base font-sans font-light max-w-lg mx-auto">
+      Bringing the serene tranquility of specialized body sculpting directly to your personal residence in three simple steps.
+    </p>
+  </div>
+
+  <!-- TARJETAS DE PASOS EN GRID ESTRUCTURADO -->
+  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10" id="steps-container">
+    {STEPS.map((step, index) => (
+      <div 
+        class="step-card group relative bg-white/90 backdrop-blur-sm rounded-3xl p-8 border border-serene-gold/20 hover:border-serene-gold hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+      >
+        <!-- NÚMERO EDITORIAL SERIF EN LA PARTE SUPERIOR -->
+        <div class="flex items-center justify-between mb-8">
+          <span class="font-serif text-5xl md:text-6xl text-serene-gold/80 group-hover:text-serene-gold group-hover:scale-105 transition-all duration-300">
+            {step.number}
+          </span>
+          <span class="text-[9px] uppercase tracking-widest text-serene-navy/50 font-sans font-semibold bg-serene-cream/60 px-3 py-1 rounded-full border border-serene-navy/5">
+            {step.detail}
+          </span>
+        </div>
+
+        <!-- CONTENIDO Y DESCRIPCIÓN -->
+        <div class="space-y-3 flex-1">
+          <h3 class="text-2xl font-serif text-serene-navy group-hover:text-serene-tan transition-colors duration-200">
+            {step.title}
+          </h3>
+          <p class="text-xs sm:text-sm font-sans text-serene-navy/70 font-light leading-relaxed">
+            {step.description}
+          </p>
+        </div>
+
+        <!-- DETALLE INFERIOR DE LÍNEA GUÍA -->
+        <div class="pt-6 mt-6 border-t border-serene-gold/15 flex items-center justify-between">
+          <span class="text-[10px] uppercase tracking-wider font-sans text-serene-tan font-bold">
+            Step {index + 1} of 3
+          </span>
+          <span class="text-serene-navy/40 group-hover:text-serene-navy group-hover:translate-x-1 transition-all duration-300">
+            →
+          </span>
+        </div>
+
+      </div>
+    ))}
+  </div>
+
+  <!-- BOTÓN DIRECTO DE RESERVA / CONSULTA -->
+  <div class="mt-16 text-center">
+    <a 
+      href={whatsappUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center space-x-3 bg-serene-navy hover:bg-serene-gold text-serene-cream hover:text-serene-navy font-sans text-xs uppercase tracking-[0.2em] font-semibold px-8 py-4 rounded-full transition-all duration-300 shadow-lg cursor-pointer"
+    >
+      <span>Book Your Home Session</span>
+      <span>→</span>
+    </a>
+  </div>
+
+</section>
+
+<!-- SCRIPT GSAP: REVELADO ESCALONADO SUAVE -->
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const stepsContainer = document.getElementById('steps-container');
+    const stepCards = document.querySelectorAll('.step-card');
+
+    if (stepsContainer && stepCards.length > 0) {
+      gsap.fromTo(
+        stepCards,
+        {
+          opacity: 0,
+          y: 30,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.15,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: stepsContainer,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+    }
+  });
+</script>

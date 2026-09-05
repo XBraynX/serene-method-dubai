@@ -1,0 +1,46 @@
+---
+import Navbar from "../components/common/Navbar.astro";
+import Footer from "../components/common/Footer.astro";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  navTheme?: "light" | "dark";
+}
+
+const {
+  title = "Serene Method | Home Wellness & Body Sculpting Dubai",
+  description = "Authentic Colombian Wood Therapy, Body Sculpting, and Lymphatic Drainage at home in Dubai.",
+  navTheme = "light",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+  </head>
+  <body
+    class="bg-serene-navy text-serene-cream font-sans antialiased selection:bg-serene-gold selection:text-serene-navy"
+  >
+    <!-- Navbar con tema configurable -->
+    <Navbar theme={navTheme} />
+
+    <!-- Capa superior global -->
+    <div class="relative z-10 bg-serene-cream shadow-2xl">
+      <main>
+        <slot />
+      </main>
+    </div>
+
+    <!-- Footer Reveal -->
+    <Footer />
+  </body>
+</html>
