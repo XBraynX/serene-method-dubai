@@ -1,0 +1,110 @@
+---
+import { getWhatsAppUrl } from "../../lib/constants";
+
+interface Props {
+  customMessage?: string;
+}
+
+const {
+  customMessage = "Hello Serene Method! I have an inquiry about your at-home therapies in Dubai.",
+} = Astro.props;
+
+const chatUrl = getWhatsAppUrl(customMessage);
+---
+
+<aside
+  class="fixed bottom-6 right-6 z-50 flex items-end flex-col group select-none pointer-events-none"
+  aria-label="Contact Concierge via WhatsApp"
+>
+  <!-- BURBUJA MENSAJE CONCIERGE -->
+  <div
+    id="wa-bubble"
+    class="pointer-events-auto opacity-0 translate-y-3 transition-all duration-500 ease-out mb-3 max-w-65 bg-white/95 backdrop-blur-md border border-serene-gold/40 shadow-xl rounded-2xl p-3.5 relative text-left"
+  >
+    <button
+      type="button"
+      id="wa-close-bubble"
+      aria-label="Close notification"
+      class="absolute top-2 right-2 text-serene-navy/40 hover:text-serene-navy transition-colors text-xs p-1 leading-none cursor-pointer"
+    >
+      ✕
+    </button>
+
+    <div class="flex items-center gap-2 mb-1.5">
+      <span class="relative flex h-2 w-2">
+        <span
+          class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"
+        ></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"
+        ></span>
+      </span>
+      <span
+        class="text-[9px] uppercase tracking-[0.2em] font-sans font-bold text-serene-tan"
+      >
+        Specialist
+      </span>
+    </div>
+
+    <p class="text-xs font-sans text-serene-navy/85 font-light leading-snug">
+      Questions or custom bookings? We are online to assist you.
+    </p>
+
+    <!-- Flecha inferior de la burbuja -->
+    <div
+      class="absolute -bottom-1.5 right-6 w-3 h-3 bg-white/95 border-r border-b border-serene-gold/40 rotate-45"
+    >
+    </div>
+  </div>
+
+  <!-- BOTÓN FLOTANTE PRINCIPAL -->
+  <a
+    href={chatUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Chat on WhatsApp"
+    class="pointer-events-auto relative flex items-center gap-2.5 bg-serene-navy hover:bg-serene-gold text-serene-cream hover:text-serene-navy border border-serene-gold/60 py-3 px-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 group/btn"
+  >
+    <!-- Punto verde status en el botón -->
+    <span
+      class="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full"
+    ></span>
+
+    <!-- SVG Oficial WhatsApp vectorizado -->
+    <svg
+      class="w-5 h-5 fill-current shrink-0 transition-transform group-hover/btn:rotate-12 duration-300"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.072.376-.044c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.394-10.416c-4.417 0-8.001 3.583-8.002 8.001 0 1.411.368 2.784 1.066 3.992l-1.134 4.143 4.24-1.112c1.163.633 2.476.974 3.826.975h.004c4.417 0 8.002-3.583 8.002-8.002 0-4.418-3.585-8.001-8.002-8.002z"
+      ></path>
+    </svg>
+
+    <!-- Texto de Marca -->
+    <span class="text-xs uppercase tracking-[0.18em] font-sans font-bold">
+      Need Help?
+    </span>
+  </a>
+</aside>
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const bubble = document.getElementById("wa-bubble");
+    const closeBtn = document.getElementById("wa-close-bubble");
+
+    if (bubble && !sessionStorage.getItem("serene_wa_closed")) {
+      // Mostrar la burbuja de manera sutil a los 3.5 segundos
+      setTimeout(() => {
+        bubble.classList.remove("opacity-0", "translate-y-3");
+        bubble.classList.add("opacity-100", "translate-y-0");
+      }, 3500);
+
+      // Botón de cerrar burbuja
+      closeBtn?.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        bubble.classList.add("opacity-0", "translate-y-3");
+        sessionStorage.setItem("serene_wa_closed", "true");
+      });
+    }
+  });
+</script>
