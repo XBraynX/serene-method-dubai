@@ -1,4 +1,6 @@
 ---
+import MorphIcon from "morphicons/astro";
+import { Menu } from "lucide";
 import { whatsappUrl } from "../../lib/constants";
 import Logo from "./Logo.astro";
 
@@ -20,7 +22,6 @@ const isDarkInitial = theme === "dark";
 >
   <div class="max-w-7xl mx-auto flex items-center justify-between">
     <!-- BRANDING LOGO -->
-
     <Logo variant="full" size="md" />
 
     <!-- LINKS DE NAVEGACIÓN DESKTOP -->
@@ -59,16 +60,19 @@ const isDarkInitial = theme === "dark";
       </a>
     </div>
 
-    <!-- BOTÓN TRIGGER MOBILE -->
+    <!-- BOTÓN TRIGGER MOBILE CON MORPHICONS -->
     <button
       id="mobile-menu-trigger"
+      type="button"
       aria-label="Toggle Menu"
-      class="md:hidden relative z-50 w-10 h-10 flex flex-col justify-center items-center space-y-1.5 backdrop-blur-md border rounded-full p-2 transition-colors duration-200 cursor-pointer"
+      aria-expanded="false"
+      class="md:hidden relative z-50 w-11 h-11 flex items-center justify-center backdrop-blur-md border rounded-full transition-all duration-200 cursor-pointer select-none"
     >
-      <span class="line-1 w-5 h-[1.5px] transition-transform duration-200"
-      ></span>
-      <span class="line-2 w-3 h-[1.5px] transition-transform duration-200"
-      ></span>
+      <div
+        class="trigger-icon-wrapper w-6 h-6 flex items-center justify-center"
+      >
+        <MorphIcon icon={Menu} stroke-width="1.8" />
+      </div>
     </button>
   </div>
 </header>
@@ -81,22 +85,22 @@ const isDarkInitial = theme === "dark";
   <div class="flex flex-col space-y-6 text-center">
     <a
       href="/"
-      class="mobile-nav-item text-3xl font-serif text-serene-navy hover:text-serene-gold transition-colors"
+      class="mobile-nav-link text-3xl font-serif text-serene-navy hover:text-serene-gold transition-colors"
       >Home</a
     >
     <a
       href="/#services"
-      class="mobile-nav-item text-3xl font-serif text-serene-navy hover:text-serene-gold transition-colors"
+      class="mobile-nav-link text-3xl font-serif text-serene-navy hover:text-serene-gold transition-colors"
       >Treatments</a
     >
     <a
       href="/#experience"
-      class="mobile-nav-item text-3xl font-serif text-serene-navy hover:text-serene-gold transition-colors"
+      class="mobile-nav-link text-3xl font-serif text-serene-navy hover:text-serene-gold transition-colors"
       >The Experience</a
     >
     <a
       href="/about"
-      class="mobile-nav-item text-3xl font-serif text-serene-navy hover:text-serene-gold transition-colors"
+      class="mobile-nav-link text-3xl font-serif text-serene-navy hover:text-serene-gold transition-colors"
       >About Us</a
     >
   </div>
@@ -117,45 +121,38 @@ const isDarkInitial = theme === "dark";
 </div>
 
 <style>
-  /* CONTROL DE MOSTRAR / OCULTAR LOGO SEGÚN EL MODO */
-  header.mode-transparent .logo-img-cream {
+  /* CONTROL DE LOGO SEGÚN MODO Y ESTADO DEL MENÚ */
+  header.mode-transparent:not(.menu-open) .logo-img-cream {
     display: block !important;
   }
-  header.mode-transparent .logo-img-navy {
+  header.mode-transparent:not(.menu-open) .logo-img-navy {
     display: none !important;
   }
 
-  header.mode-scrolled .logo-img-cream {
+  header.mode-scrolled .logo-img-cream,
+  header.menu-open .logo-img-cream {
     display: none !important;
   }
-  header.mode-scrolled .logo-img-navy {
+  header.mode-scrolled .logo-img-navy,
+  header.menu-open .logo-img-navy {
     display: block !important;
   }
 
-  /* MODO TRANSPARENTE (HERO) */
-  header.mode-transparent .nav-link {
+  /* MODO TRANSPARENTE */
+  header.mode-transparent:not(.menu-open) .nav-link {
     color: #fdfcf9 !important;
   }
-  header.mode-transparent .nav-link:hover {
-    color: #dfc49a !important;
-  }
-  header.mode-transparent .nav-btn {
+  header.mode-transparent:not(.menu-open) .nav-btn {
     border-color: rgba(223, 196, 154, 0.6) !important;
     color: #fdfcf9 !important;
   }
-  header.mode-transparent .nav-btn:hover {
-    background-color: #dfc49a !important;
-    color: #090d3d !important;
-  }
-  header.mode-transparent #mobile-menu-trigger {
+  header.mode-transparent:not(.menu-open) #mobile-menu-trigger {
     border-color: rgba(223, 196, 154, 0.4) !important;
     background-color: rgba(253, 252, 249, 0.1) !important;
-  }
-  header.mode-transparent #mobile-menu-trigger span {
-    background-color: #fdfcf9 !important;
+    color: #fdfcf9 !important;
   }
 
-  /* MODO SCROLLED (SECCIONES CLARAS / PÁGINAS INTERNAS) */
+  /* MODO SCROLLED (BARRA CLARA) */
   header.mode-scrolled {
     background-color: rgba(245, 240, 232, 0.96) !important;
     backdrop-filter: blur(12px);
@@ -163,47 +160,79 @@ const isDarkInitial = theme === "dark";
     padding-top: 0.75rem !important;
     padding-bottom: 0.75rem !important;
   }
-
   header.mode-scrolled .nav-link {
     color: #090d3d !important;
-  }
-  header.mode-scrolled .nav-link:hover {
-    color: #beaa8e !important;
   }
   header.mode-scrolled .nav-btn {
     border-color: rgba(9, 13, 61, 0.3) !important;
     color: #090d3d !important;
   }
-  header.mode-scrolled .nav-btn:hover {
-    background-color: #090d3d !important;
-    color: #fdfcf9 !important;
-  }
   header.mode-scrolled #mobile-menu-trigger {
     border-color: rgba(9, 13, 61, 0.2) !important;
     background-color: rgba(9, 13, 61, 0.05) !important;
+    color: #090d3d !important;
   }
-  header.mode-scrolled #mobile-menu-trigger span {
-    background-color: #090d3d !important;
+
+  /* CUANDO EL OVERLAY ESTÁ ABIERTO: CONTRASTE ALTO SIEMPRE */
+  header.menu-open #mobile-menu-trigger {
+    border-color: rgba(9, 13, 61, 0.25) !important;
+    background-color: rgba(9, 13, 61, 0.08) !important;
+    color: #090d3d !important;
+  }
+
+  /* Ajuste de color del stroke de MorphIcon */
+  #mobile-menu-trigger morph-icon,
+  #mobile-menu-trigger svg {
+    stroke: currentColor;
   }
 </style>
 
 <script>
   import { gsap } from "gsap";
+  import { Menu, X } from "lucide";
+  import type { MorphIconElement } from "morphicons/element";
 
   window.addEventListener("DOMContentLoaded", () => {
     const navbar = document.getElementById("main-navbar");
     const heroSection = document.getElementById("hero-section");
-    const mobileTrigger = document.getElementById("mobile-menu-trigger");
+    const mobileTrigger = document.querySelector<HTMLButtonElement>(
+      "#mobile-menu-trigger",
+    );
+    const morphIcon =
+      mobileTrigger?.querySelector<MorphIconElement>("morph-icon");
     const mobileOverlay = document.getElementById("mobile-overlay");
     const theme = navbar?.getAttribute("data-theme") || "light";
 
     let isMenuOpen = false;
     let lastScrollY = window.scrollY;
 
+    const closeMenu = () => {
+      if (!isMenuOpen) return;
+      isMenuOpen = false;
+      mobileTrigger?.setAttribute("aria-expanded", "false");
+      if (morphIcon) morphIcon.icon = Menu;
+
+      navbar?.classList.remove("menu-open");
+      mobileOverlay?.classList.add("opacity-0", "pointer-events-none");
+      mobileOverlay?.classList.remove("opacity-100", "pointer-events-auto");
+      document.body.classList.remove("overflow-hidden");
+    };
+
+    const openMenu = () => {
+      isMenuOpen = true;
+      mobileTrigger?.setAttribute("aria-expanded", "true");
+      if (morphIcon) morphIcon.icon = X;
+
+      navbar?.classList.add("menu-open");
+      mobileOverlay?.classList.remove("opacity-0", "pointer-events-none");
+      mobileOverlay?.classList.add("opacity-100", "pointer-events-auto");
+      document.body.classList.add("overflow-hidden");
+    };
+
+    // Scroll handling
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      // Si la página tiene tema oscuro forzado (ej: About Us) permanece siempre en mode-scrolled
       if (theme === "dark") {
         navbar?.classList.add("mode-scrolled");
         navbar?.classList.remove("mode-transparent");
@@ -218,7 +247,6 @@ const isDarkInitial = theme === "dark";
         }
       }
 
-      // Slide suave al ocultar/mostrar en scroll
       if (currentScrollY > lastScrollY && currentScrollY > 120 && !isMenuOpen) {
         gsap.to(navbar, { yPercent: -100, duration: 0.2, ease: "power2.out" });
       } else if (currentScrollY < lastScrollY && !isMenuOpen) {
@@ -231,58 +259,19 @@ const isDarkInitial = theme === "dark";
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
 
-    // Toggle Menú Mobile
+    // Toggle Mobile Trigger
     mobileTrigger?.addEventListener("click", () => {
-      isMenuOpen = !isMenuOpen;
-
       if (isMenuOpen) {
-        mobileOverlay?.classList.remove("opacity-0", "pointer-events-none");
-        mobileOverlay?.classList.add("opacity-100", "pointer-events-auto");
-
-        gsap.to(".line-1", { rotate: 45, y: 3, duration: 0.25 });
-        gsap.to(".line-2", {
-          rotate: -45,
-          y: -3,
-          width: "1.25rem",
-          duration: 0.25,
-        });
-
-        gsap.fromTo(
-          ".mobile-nav-item",
-          { y: 15, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.3,
-            stagger: 0.05,
-            ease: "power2.out",
-          },
-        );
+        closeMenu();
       } else {
-        mobileOverlay?.classList.add("opacity-0", "pointer-events-none");
-        mobileOverlay?.classList.remove("opacity-100", "pointer-events-auto");
-
-        gsap.to(".line-1", { rotate: 0, y: 0, duration: 0.25 });
-        gsap.to(".line-2", {
-          rotate: 0,
-          y: 0,
-          width: "0.75rem",
-          duration: 0.25,
-        });
+        openMenu();
       }
     });
 
-    document.querySelectorAll(".mobile-nav-item").forEach((link) => {
+    // Cerrar al dar click a cualquier link del overlay
+    document.querySelectorAll(".mobile-nav-link").forEach((link) => {
       link.addEventListener("click", () => {
-        isMenuOpen = false;
-        mobileOverlay?.classList.add("opacity-0", "pointer-events-none");
-        gsap.to(".line-1", { rotate: 0, y: 0, duration: 0.25 });
-        gsap.to(".line-2", {
-          rotate: 0,
-          y: 0,
-          width: "0.75rem",
-          duration: 0.25,
-        });
+        closeMenu();
       });
     });
   });
