@@ -33,7 +33,7 @@ export interface Service {
 }
 
 const AUGUST_PROMO: Promotion = {
-  active: true,
+  active: false,
   label: 'August Special',
   discountPercentage: 15,
 };
@@ -60,7 +60,7 @@ export const SERVICES: Service[] = [
     description: 'Abdomen, Waist, Flanks & Arms. Manual + Authentic Wood Therapy to reshape and define.',
     category: 'body',
     image: getLocalImage('colombianbodycontouring.webp'),
-    promotion: AUGUST_PROMO,
+    promotion: BACK_TO_SCHOOL_PROMO,
     options: [
       { duration: '60 MIN', price: 400 },
       { duration: '90 MIN', price: 490, includes: 'Includes Radiofrequency or Cavitation' }
@@ -84,7 +84,7 @@ export const SERVICES: Service[] = [
     description: 'Legs & Buttocks focus using Wood Therapy to firm, lift, and tone.',
     category: 'body',
     image: getLocalImage('buttockliftmassage.webp'),
-    promotion: AUGUST_PROMO,
+    promotion: BACK_TO_SCHOOL_PROMO,
     options: [
       { duration: '60 MIN', price: 400 },
       { duration: '90 MIN', price: 490, includes: 'Includes Radiofrequency or Passive Gymnastics' }
@@ -96,7 +96,7 @@ export const SERVICES: Service[] = [
     description: 'Complete transformation: Slimming, Anti-Cellulite & Buttock Lift in one master session.',
     category: 'body',
     image: getLocalImage('fullbodysculptingexperience.webp'),
-    promotion: AUGUST_PROMO,
+    promotion: BACK_TO_SCHOOL_PROMO,
     options: [
       { duration: '120 MIN', price: 800, includes: 'Wood Therapy, Cavitation, RF & Passive Gymnastics' }
     ]
@@ -106,6 +106,7 @@ export const SERVICES: Service[] = [
     title: 'Manual Heat Detox Therapy',
     description: 'Thermo-sweating metabolism stimulation, intense fluid reduction, and metabolic drainage.',
     category: 'body',
+    promotion: BACK_TO_SCHOOL_PROMO,
     image: getLocalImage('manualheatdetoxtherapy.webp'),
     options: [
       { duration: '90 MIN', price: 490 }
@@ -131,7 +132,7 @@ export const SERVICES: Service[] = [
     description: 'Therapeutic full body deep pressure focus to release chronic muscle tension and knots.',
     category: 'drainage',
     image: getLocalImage('deeptissuemassage.webp'),
-    promotion: AUGUST_PROMO,
+    promotion: BACK_TO_SCHOOL_PROMO,
     options: [
       { duration: '60 MIN', price: 390 },
       { duration: '90 MIN', price: 490 }
@@ -143,6 +144,7 @@ export const SERVICES: Service[] = [
     description: 'Full Body Swedish Technique designed to induce deep mental and muscle tranquility.',
     category: 'drainage',
     image: getLocalImage('relaxationmassage.webp'),
+    promotion: BACK_TO_SCHOOL_PROMO,
     options: [
       { duration: '60 MIN', price: 390 },
       { duration: '90 MIN', price: 490 }
@@ -154,6 +156,7 @@ export const SERVICES: Service[] = [
     description: 'Deep thermal tissue relaxation, stiffness relief, and holistic energy balance.',
     category: 'drainage',
     image: getLocalImage('hotvolcanicstonetherapy.webp'),
+    promotion: BACK_TO_SCHOOL_PROMO,
     options: [
       { duration: '90 MIN', price: 490 }
     ]
@@ -177,6 +180,7 @@ export const SERVICES: Service[] = [
     description: 'Deep extraction, steam pore dilation, and tailored skin customization for a pure glow.',
     category: 'facial',
     image: getLocalImage('deepfacialcleansing.webp'),
+    promotion: BACK_TO_SCHOOL_PROMO,
     options: [
       { duration: '60 MIN', price: 390 }
     ]
@@ -187,6 +191,7 @@ export const SERVICES: Service[] = [
     description: 'Advanced cellular repair infused with premium Exosomes or Salmon DNA.',
     category: 'facial',
     image: getLocalImage('dermapenrejuvenation.webp'),
+    promotion: BACK_TO_SCHOOL_PROMO,
     options: [
       { duration: 'Session', price: 800, includes: 'Exosomes or Salmon DNA infusion' }
     ]
@@ -198,6 +203,7 @@ export const SERVICES: Service[] = [
     title: 'Post-Surgical Care',
     description: 'Specialized recovery therapy to reduce inflammation, prevent fibrosis, and speed healing.',
     category: 'specialized',
+    promotion: BACK_TO_SCHOOL_PROMO,
     image: getLocalImage('post-surgicalcare.webp'),
     options: [
       { duration: '60 MIN', price: 400 }
@@ -208,6 +214,7 @@ export const SERVICES: Service[] = [
     title: 'Prenatal & Postpartum Massage',
     description: 'Gentle, safe, and soothing care tailored specifically for expecting and new mothers.',
     category: 'specialized',
+    promotion: BACK_TO_SCHOOL_PROMO,
     image: getLocalImage('prenatalmassage.webp'),
     options: [
       { duration: '60 MIN', price: 390 }
